@@ -1,0 +1,45 @@
+<select (change)="setDisplayedUsers(+$event.target.value)">
+  <option value="10" selected>10</option>
+  <option value="20">20</option>
+  <option value="30">30</option>
+</select>
+<div class="container">
+  <table mat-table [dataSource]="paginatedUsersData" class="mat-elevation-z8">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let user">{{ user.name.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell *matHeaderCellDef>Lastname</th>
+      <td mat-cell *matCellDef="let user">{{ user.name.last }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef>City</th>
+      <td mat-cell *matCellDef="let user">{{ user.location.city }}</td>
+    </ng-container>
+    <ng-container matColumnDef="cell">
+      <th mat-header-cell *matHeaderCellDef>Phone</th>
+      <td mat-cell *matCellDef="let user">{{ user.cell }}</td>
+    </ng-container>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="['title', 'lastname', 'city', 'cell']"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['title', 'lastname', 'city', 'cell']"
+    ></tr>
+  </table>
+</div>
+<div class="pagination__container">
+  <div
+    [ngClass]="currentPage === i + 1 ? 'active' : ''"
+    class="pagination__button"
+    *ngFor="let page of arr(pages).fill(null); let i = index"
+    (click)="setCurrentPage(i + 1)"
+  >
+    {{ i + 1 }}
+  </div>
+</div>

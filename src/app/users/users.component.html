@@ -1,0 +1,61 @@
+<div *ngIf="!usersData; else onDataReady" class="loader">
+  <svg height="60" width="60">
+    <circle
+      cx="30"
+      cy="30"
+      r="20"
+      stroke="black"
+      stroke-width="5"
+      fill="none"
+    />
+  </svg>
+</div>
+<ng-template #onDataReady>
+  <div class="container">
+    <form class="filters-form">
+      <p>Filter by: </p>
+      <label for="filterByLastname"
+        >Lastname
+        <input
+          type="text"
+          id="filterByLastname"
+          [attr.data-filter-field]="'name.last'"
+          (change)="
+            setFilter(
+              $event.target.getAttribute('data-filter-field'),
+              $event.target.value
+            )
+          "
+      /></label>
+      <label for="filterByPhone"
+        >Phone
+        <input
+          type="number"
+          id="filterByPhone"
+          [attr.data-filter-field]="'cell'"
+          (change)="
+            setFilter(
+              $event.target.getAttribute('data-filter-field'),
+              $event.target.value
+            )
+          "
+      /></label>
+      <label for="filterByCity"
+        >City
+        <input
+          type="text"
+          id="filterByCity"
+          [attr.data-filter-field]="'location.city'"
+          (change)="
+            setFilter(
+              $event.target.getAttribute('data-filter-field'),
+              $event.target.value
+            )
+          "
+      /></label>
+      <button type="button" (click)="clearFilters()">Clear</button>
+      <button type="button" (click)="filterData()">Filter</button>
+    </form>
+    <app-users-table [usersData]="filteredData"></app-users-table>
+  </div>
+</ng-template>
