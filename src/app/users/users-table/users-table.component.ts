@@ -1,9 +1,15 @@
-import { Component, OnInit, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectionStrategy,
+} from "@angular/core";
 
 @Component({
   selector: "app-users-table",
   templateUrl: "./users-table.component.html",
-  styleUrls: ["./users-table.component.css"]
+  styleUrls: ["./users-table.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersTableComponent implements OnInit {
   @Input() set usersData(value) {

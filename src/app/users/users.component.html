@@ -12,49 +12,60 @@
 </div>
 <ng-template #onDataReady>
   <div class="container">
-    <form class="filters-form">
-      <p>Filter by: </p>
-      <label for="filterByLastname"
-        >Lastname
-        <input
-          type="text"
-          id="filterByLastname"
-          [attr.data-filter-field]="'name.last'"
-          (change)="
-            setFilter(
-              $event.target.getAttribute('data-filter-field'),
-              $event.target.value
-            )
-          "
-      /></label>
-      <label for="filterByPhone"
-        >Phone
-        <input
-          type="number"
-          id="filterByPhone"
-          [attr.data-filter-field]="'cell'"
-          (change)="
-            setFilter(
-              $event.target.getAttribute('data-filter-field'),
-              $event.target.value
-            )
-          "
-      /></label>
-      <label for="filterByCity"
-        >City
-        <input
-          type="text"
-          id="filterByCity"
-          [attr.data-filter-field]="'location.city'"
-          (change)="
-            setFilter(
-              $event.target.getAttribute('data-filter-field'),
-              $event.target.value
-            )
-          "
-      /></label>
-      <button type="button" (click)="clearFilters()">Clear</button>
-      <button type="button" (click)="filterData()">Filter</button>
+    <p>Filter by:</p>
+    <form #filterForm="ngForm" class="filters-form">
+      <ng-container *ngIf="!filtersReset">
+        <label class="filters-form__element"
+          >Lastname
+          <input
+            type="text"
+            name="name.last"
+            ngModel
+            [ngModelOptions]="
+              !!currentFilter ? { updateOn: currentFilter } : {}
+            "
+            (ngModelChange)="!!currentFilter ? filterData() : false"
+          />
+        </label>
+
+        <label class="filters-form__element"
+          >Phone <input type="text" name="cell" ngModel />
+        </label>
+
+        <label class="filters-form__element"
+          >City
+          <input type="text" name="location.city" ngModel />
+        </label>
+      </ng-container>
+
+      <div class="filter-controls filters-form__element">
+        <button type="button" (click)="clearFilters()">Clear</button>
+        <button
+          type="button"
+          [disabled]="currentFilter !== filterOn.BUTTON"
+          (click)="filterData()"
+        >
+          Filter
+        </button>
+      </div>
+
+      <div class="filters-form__options">
+        <mat-radio-group
+          class="filters-form__radio-group"
+          [(ngModel)]="currentFilter"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <mat-radio-button
+            class="filters-form__radio"
+            *ngFor="let option of filterOptions; trackBy: trackBy"
+            [value]="option.value"
+          >
+            {{ option.name }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      {{ filterForm.value | json }}
     </form>
     <app-users-table [usersData]="filteredData"></app-users-table>
   </div>

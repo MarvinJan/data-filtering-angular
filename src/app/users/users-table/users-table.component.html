@@ -1,8 +1,5 @@
-<select (change)="setDisplayedUsers(+$event.target.value)">
-  <option value="10" selected>10</option>
-  <option value="20">20</option>
-  <option value="30">30</option>
-</select>
+<ng-container *ngTemplateOutlet="tableControls"></ng-container>
+
 <div class="container">
   <table mat-table [dataSource]="paginatedUsersData" class="mat-elevation-z8">
     <ng-container matColumnDef="title">
@@ -33,13 +30,28 @@
     ></tr>
   </table>
 </div>
-<div class="pagination__container">
-  <div
-    [ngClass]="currentPage === i + 1 ? 'active' : ''"
-    class="pagination__button"
-    *ngFor="let page of arr(pages).fill(null); let i = index"
-    (click)="setCurrentPage(i + 1)"
+
+<ng-container *ngTemplateOutlet="tableControls"></ng-container>
+
+<ng-template #tableControls>
+  <select
+    *ngIf="data.length > 10"
+    [ngModel]="displayedUsers"
+    (ngModelChange)="setDisplayedUsers(+$event)"
   >
-    {{ i + 1 }}
+    <option value="10" selected>10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+  </select>
+
+  <div class="pagination__container">
+    <div
+      [ngClass]="currentPage === i + 1 ? 'active' : ''"
+      class="pagination__button"
+      *ngFor="let page of arr(pages).fill(null); let i = index"
+      (click)="setCurrentPage(i + 1)"
+    >
+      {{ i + 1 }}
+    </div>
   </div>
-</div>
+</ng-template>

@@ -4,10 +4,12 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MaterialModule } from "./material/material.module";
 import { UsersComponent } from "./users/users.component";
 import { UsersTableComponent } from "./users/users-table/users-table.component";
+// import { MaterialModule } from "./material/material.module";
+import { MatRadioModule } from "@angular/material/radio";
 import { FormsModule } from "@angular/forms";
+import { MatTableModule } from "@angular/material/table";
 
 @NgModule({
   declarations: [AppComponent, UsersComponent, UsersTableComponent],
@@ -15,10 +17,12 @@ import { FormsModule } from "@angular/forms";
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule,
-    FormsModule
+    // MaterialModule,
+    MatRadioModule,
+    MatTableModule,
+    FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
