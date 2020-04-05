@@ -23,7 +23,6 @@ export class UsersComponent implements OnInit {
   title = "DataFiltering";
   usersData: Array<any>;
   filteredData: Array<any>;
-  filtersReset: boolean = false;
 
   filterOn = {
     BUTTON: "",
@@ -31,7 +30,7 @@ export class UsersComponent implements OnInit {
     INPUT: "change",
   };
 
-  currentFilter = this.filterOn.BUTTON;
+  currentFilterStyle = this.filterOn.BUTTON;
 
   filterOptions = Object.entries(this.filterOn).map(([name, value]) => {
     return { name, value };
@@ -45,8 +44,12 @@ export class UsersComponent implements OnInit {
 
   clearFilters() {
     this.filters.resetForm();
-
     this.filteredData = this.usersData;
+  }
+
+  changeFilterStyle(style) {
+    this.clearFilters();
+    this.currentFilterStyle = style;
   }
 
   filterData() {
@@ -74,8 +77,5 @@ export class UsersComponent implements OnInit {
   constructor(private dataService: DataService) {}
   ngOnInit() {
     this.loadUsersData();
-  }
-  ngDoCheck() {
-    console.log("check");
   }
 }
